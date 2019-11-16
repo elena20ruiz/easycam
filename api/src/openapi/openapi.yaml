@@ -40,7 +40,36 @@ paths:
                   description: A urlsafe base64 encoded image.
       responses:
         200:
-          description: Standard Git Inspect API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard EasyCam API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+  /image/cluster:
+    get:
+      tags:
+        - image
+      summary: Cluster all images from a batch given its identifier.
+      description: Invoke this endpoint to cluster all images from a batch given its identifier.
+      operationId: src.api.image.cluster
+      parameters:
+        - name: batch_id
+          in: query
+          description: Specifies the batch to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Standard EasyCam API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
