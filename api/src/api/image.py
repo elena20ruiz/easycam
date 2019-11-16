@@ -6,7 +6,7 @@ from flask import request
 from src import *
 from src.helper import response, log
 from src.helper.timer import Timer
-from src.services import image_service, keras_service, index_service
+from src.services import image_service, keras_service, index_service, cluster_service
 
 
 def download():
@@ -44,7 +44,7 @@ def cluster(batch_id):
                 return response.make(error=True, message=MESSAGE_ERROR_BATCH)
 
         with Timer('Retrieve images'):
-            images = glob.glob(f'{folder_path}/*.jpg')
+            images = glob.glob(f'{folder_path}/*{IMAGE_FORMAT}')
             images.sort()
             if not images:
                 log.error(f'No images found in {batch_id} batch.')
@@ -62,8 +62,14 @@ def cluster(batch_id):
                 log.error(f'Nmslib could not be built: [{index_path}]')
                 return response.make(error=True, message=MESSAGE_ERROR_INDEX)
 
+        with Timer('Find clusters'):
+            clusters = cluster_service.find(index_path, features, images, batch_id)
+            if not clusters:
+                log.error(f'Clusters could not be formed: [{clusters}]')
+                return response.make(error=True, message=MESSAGE_ERROR_CLUSTER)
+
         log.info(f'Cluster completed')
-        return response.make(error=False, response=dict(cluster=images))
+        return response.make(error=False, response=dict(cluster=clusters))
 
     except Exception as e:
         log.error(f'Exception while processing {cluster.__name__} function: [{e}]')

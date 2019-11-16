@@ -21,7 +21,7 @@ def download(batch_id, image_id, image_base64):
                 pass  # For avoiding errors when more than one thread are trying to create it
 
         image_data = base64.b64decode(image_base64)
-        output_path = f'{batch_folder}/{image_id}.jpg'
+        output_path = f'{batch_folder}/{image_id}{IMAGE_FORMAT}'
         with open(output_path, 'wb') as f:
             f.write(image_data)
         with Image.open(output_path).convert('RGB') as img:
