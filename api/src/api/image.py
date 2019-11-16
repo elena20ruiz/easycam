@@ -6,7 +6,7 @@ from flask import request
 from src import *
 from src.helper import response, log
 from src.helper.timer import Timer
-from src.services import image_service, keras_service
+from src.services import image_service, keras_service, index_service
 
 
 def download():
@@ -54,6 +54,12 @@ def cluster(batch_id):
             if len(images) != len(features):
                 log.error(f'Not all features could be obtained from all images: [{len(images)}] != [{len(features)}]')
                 return response.make(error=True, message=MESSAGE_ERROR_FEATURES)
+
+        with Timer('Create index'):
+            index_path = index_service.build(features, batch_id)
+            if not index_path:
+                log.error(f'Nmslib could not be built: [{index_path}]')
+                return response.make(error=True, message=MESSAGE_ERROR_INDEX)
 
         log.info(f'Cluster completed')
         return response.make(error=False, response=dict(cluster=images))
