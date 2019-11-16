@@ -3,3 +3,9 @@ Flask
 Flask-Cors
 uWSGI
 uwsgitop
+Keras
+tensorflow
+numpy
+opencv-python
+Pillow
+nmslib

@@ -1,9 +1,12 @@
+import os
+import glob
+
 from flask import request
 
 from src import *
 from src.helper import response, log
 from src.helper.timer import Timer
-from src.services import image_service
+from src.services import image_service, keras_service, index_service, cluster_service
 
 
 def download():
@@ -33,7 +36,45 @@ def download():
 
 
 def cluster(batch_id):
-    return 'OK'
+    try:
+        with Timer('Validate input'):
+            folder_path = f'{DATA_FOLDER}/{batch_id}'
+            if not os.path.exists(folder_path):
+                log.error(f'Error while validating parameters in {cluster.__name__} function: {folder_path}')
+                return response.make(error=True, message=MESSAGE_ERROR_BATCH)
+
+        with Timer('Retrieve images'):
+            images = glob.glob(f'{folder_path}/*{IMAGE_FORMAT}')
+            images.sort()
+            if not images:
+                log.error(f'No images found in {batch_id} batch.')
+                return response.make(error=True, message=MESSAGE_ERROR_BATCH_IMAGES)
+
+        with Timer('Extract features'):
+            features = keras_service.extract_features(images)
+            if len(images) != len(features):
+                log.error(f'Not all features could be obtained from all images: [{len(images)}] != [{len(features)}]')
+                return response.make(error=True, message=MESSAGE_ERROR_FEATURES)
+
+        with Timer('Create index'):
+            index_path = index_service.build(features, batch_id)
+            if not index_path:
+                log.error(f'Nmslib could not be built: [{index_path}]')
+                return response.make(error=True, message=MESSAGE_ERROR_INDEX)
+
+        with Timer('Find clusters'):
+            clusters = cluster_service.find(index_path, features, images, batch_id)
+            if not clusters:
+                log.error(f'Clusters could not be formed: [{clusters}]')
+                return response.make(error=True, message=MESSAGE_ERROR_CLUSTER)
+
+        log.info(f'Cluster completed')
+        return response.make(error=False, response=dict(cluster=clusters))
+
+    except Exception as e:
+        log.error(f'Exception while processing {cluster.__name__} function: [{e}]')
+        log.exception(e)
+        return response.make(error=True, message=MESSAGE_ERROR)
 
 
 def clean(cluster_id):
