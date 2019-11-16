@@ -45,6 +45,7 @@ def cluster(batch_id):
 
         with Timer('Retrieve images'):
             images = glob.glob(f'{folder_path}/*.jpg')
+            images.sort()
             if not images:
                 log.error(f'No images found in {batch_id} batch.')
                 return response.make(error=True, message=MESSAGE_ERROR_BATCH_IMAGES)
