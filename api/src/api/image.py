@@ -77,5 +77,5 @@ def cluster(batch_id):
         return response.make(error=True, message=MESSAGE_ERROR)
 
 
-def clean(cluster_id):
+def clean(batch_id, cluster_id):
     return 'OK'

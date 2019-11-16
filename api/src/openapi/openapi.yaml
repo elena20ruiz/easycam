@@ -90,6 +90,12 @@ paths:
       description: Invoke this endpoint to clean all images from a cluster given its identifier returning the best image.
       operationId: src.api.image.clean
       parameters:
+        - name: batch_id
+          in: query
+          description: Specifies the batch to retrieve.
+          required: true
+          schema:
+            type: string
         - name: cluster_id
           in: query
           description: Specifies the cluster to retrieve.
