@@ -7,7 +7,7 @@ from flask import request
 from src import *
 from src.helper import response, log
 from src.helper.timer import Timer
-from src.services import image_service, keras_service, index_service, cluster_service
+from src.services import image_service, keras_service, index_service, cluster_service, blurry_service
 
 
 def download():
@@ -97,6 +97,12 @@ def clean(batch_id, cluster_id):
                 log.error(f'{cluster_id} not found in the list of clusters.')
                 return response.make(error=True, message=MESSAGE_ERROR_CLUSTER_NOT_FOUND)
             selected_cluster = cluster_list[cluster_id]
+
+        with Timer('Clean cluster'):
+            selected_image = blurry_service.get_best_image(batch_id, selected_cluster)
+            if not selected_image:
+                log.error(f'Error getting the best image: {selected_image}')
+                return response.make(error=True, message=MESSAGE_ERROR_CLEAN)
 
         log.info(f'Clean completed')
         return response.make(error=False, response=dict(image=selected_cluster[0]))
