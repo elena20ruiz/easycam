@@ -1,7 +1,10 @@
 import connexion
 
+from keras.applications.inception_v3 import InceptionV3
 from flask_cors import CORS
 
+
+resnet50_model = InceptionV3(include_top=False, pooling='avg', weights='imagenet')
 
 connexion_app = connexion.FlaskApp(__name__, specification_dir='./openapi/')
 flask_app = connexion_app.app
