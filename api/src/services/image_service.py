@@ -1,6 +1,8 @@
 import base64
 import os
 
+from PIL import Image
+
 from src import *
 from src.helper import log
 
@@ -20,6 +22,9 @@ def download(batch_id, image_id, image_base64):
         output_path = f'{batch_folder}/{image_id}.jpg'
         with open(output_path, 'wb') as f:
             f.write(image_data)
+        with Image.open(output_path).convert('RGB') as img:
+            img = img.resize(size=IMAGE_SIZE, resample=Image.LANCZOS)
+            img.save(output_path, format='JPG', quality=95)
         return output_path
 
     except Exception as e:
