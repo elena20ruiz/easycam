@@ -1,4 +1,8 @@
-# EasyCam
+<br>
+<p align="center">
+  <img alt="EasyCam" src="docs/images/logo_small.png" width="50%"/>
+</p>
+<br>
 
 [![HitCount](http://hits.dwyl.io/elena20ruiz/easycam.svg)](http://hits.dwyl.io/elena20ruiz/easycam)
 [![GitHub stars](https://img.shields.io/github/stars/elena20ruiz/easycam.svg)](https://GitHub.com/elena20ruiz/easycam/stargazers/)
