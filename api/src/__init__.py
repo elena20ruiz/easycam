@@ -18,6 +18,7 @@ MESSAGE_ERROR_BATCH_IMAGES = 'No images found in the given batch.'
 MESSAGE_ERROR_FEATURES = 'Not all features could be obtained.'
 MESSAGE_ERROR_INDEX = 'Index could not be built.'
 MESSAGE_ERROR_CLUSTER = 'Clusters could not be formed'
+MESSAGE_ERROR_CLUSTER_NOT_FOUND = 'Cluster specified do not exist in the given batch.'
 
 
 __all__ = [
@@ -36,5 +37,6 @@ __all__ = [
     'MESSAGE_ERROR_BATCH_IMAGES',
     'MESSAGE_ERROR_FEATURES',
     'MESSAGE_ERROR_INDEX',
-    'MESSAGE_ERROR_CLUSTER'
+    'MESSAGE_ERROR_CLUSTER',
+    'MESSAGE_ERROR_CLUSTER_NOT_FOUND'
 ]
