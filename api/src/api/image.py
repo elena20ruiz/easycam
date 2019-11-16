@@ -1,3 +1,4 @@
+import json
 import os
 import glob
 
@@ -6,7 +7,7 @@ from flask import request
 from src import *
 from src.helper import response, log
 from src.helper.timer import Timer
-from src.services import image_service, keras_service, index_service, cluster_service
+from src.services import image_service, keras_service, index_service, cluster_service, blurry_service
 
 
 def download():
@@ -77,5 +78,36 @@ def cluster(batch_id):
         return response.make(error=True, message=MESSAGE_ERROR)
 
 
-def clean(cluster_id):
-    return 'OK'
+def clean(batch_id, cluster_id):
+    try:
+        with Timer('Validate input: batch_id'):
+            folder_path = f'{DATA_FOLDER}/{batch_id}'
+            if not os.path.exists(folder_path):
+                log.error(f'Error while validating parameters in {clean.__name__} function: {folder_path}')
+                return response.make(error=True, message=MESSAGE_ERROR_BATCH)
+
+        with Timer('Validate input: cluster_id'):
+            cluster_json_file_name = f'{DATA_FOLDER}/{batch_id}/{CLUSTER_JSON_FILE_NAME}'
+            if not os.path.exists(cluster_json_file_name):
+                log.error(f'Error while validating parameters in {clean.__name__} function: {cluster_json_file_name}')
+                return response.make(error=True, message=MESSAGE_ERROR_CLUSTER)
+            with open(cluster_json_file_name) as json_file:
+                cluster_list = json.load(json_file)
+            if cluster_id not in cluster_list:
+                log.error(f'{cluster_id} not found in the list of clusters.')
+                return response.make(error=True, message=MESSAGE_ERROR_CLUSTER_NOT_FOUND)
+            selected_cluster = cluster_list[cluster_id]
+
+        with Timer('Clean cluster'):
+            selected_image = blurry_service.get_best_image(batch_id, selected_cluster)
+            if not selected_image:
+                log.error(f'Error getting the best image: {selected_image}')
+                return response.make(error=True, message=MESSAGE_ERROR_CLEAN)
+
+        log.info(f'Clean completed')
+        return response.make(error=False, response=dict(image=selected_cluster[0]))
+
+    except Exception as e:
+        log.error(f'Exception while processing {clean.__name__} function: [{e}]')
+        log.exception(e)
+        return response.make(error=True, message=MESSAGE_ERROR)
