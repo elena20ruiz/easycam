@@ -1,8 +1,11 @@
-import { AppContainer } from 'react-hot-loader';
+
 import React from 'react';
-import { render } from 'react-dom';
 import App from './App';
-import './style.css';
+import { install, applyUpdate } from 'offline-plugin/runtime';
+import './style.css'
+
+import {  AppContainer } from 'react-hot-loader';
+import { render } from 'react-dom';
 
 const rootEl = document.getElementById('root');
 render(
@@ -25,7 +28,6 @@ if (module.hot) {
   });
 }
 
-import { install, applyUpdate } from 'offline-plugin/runtime';
 
 install({
   onUpdateReady: () => applyUpdate()
