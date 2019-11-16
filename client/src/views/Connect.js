@@ -35,7 +35,8 @@ class Connect extends React.Component {
 
         this.state = {
             elementsValue: elementsValue,
-            loading: false
+            loading: false,
+            error: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -55,15 +56,21 @@ class Connect extends React.Component {
 
     handleClick() {
         const allEqual = !!this.state.elementsValue.reduce(function(a, b){ return (a === b) ? a : NaN; });
-        if(allEqual){
+        if(allEqual && this.state.elementsValue[0] === true){
             
             //LOADING
             this.setState({
-                loading: true
+                loading: true,
+                error:false
             })
             //Connect
 
             // this.props.onClick();
+        }
+        else {
+            this.setState({
+                error: true
+            })
         }
     }
 
@@ -82,12 +89,15 @@ class Connect extends React.Component {
 
     renderCheckboxes() {
         return (
-            <FormControl component="fieldset" className={this.props.classes.formControl}>
+            <FormControl component="fieldset" error={this.state.error} className={this.props.classes.formControl}>
                 <FormLabel component="legend">{constant.STEPS_TITLE}</FormLabel>
                 <FormGroup>
                     {this.renderElements()}
                 </FormGroup>
-                <FormHelperText>Be careful</FormHelperText>
+                {
+                    this.state.error &&
+                    <FormHelperText>Remember complete all the steps and the check it.</FormHelperText>
+                }
             </FormControl>
         )
     }

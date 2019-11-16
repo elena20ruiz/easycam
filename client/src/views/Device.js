@@ -25,7 +25,8 @@ class Device extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            device: undefined
+            device: undefined,
+            error: false
         }
         this.devices = constant.DEVICES;
 
@@ -40,7 +41,14 @@ class Device extends React.Component {
     }
 
     handleClick() {
-        this.props.onClick({'device': this.state.device});
+        if(!this.state.device){
+            this.setState({error: true})
+        }
+        else {
+            this.setState({error: false})
+            this.props.onClick({'device': this.state.device});
+        }
+
     }
 
     render() {
@@ -59,6 +67,7 @@ class Device extends React.Component {
                             id="demo-simple-select"
                             value={this.state.device}
                             onChange={(e) => this.handleChange(e)}
+                            error={this.state.error}
                         >
                             <MenuItem value={'xiaomi'}>{this.devices.xiaomi}</MenuItem>
                             <MenuItem value={'micro'}>{this.devices.micro}</MenuItem>

@@ -12,7 +12,10 @@ const useStyle = theme => ({
         color: 'white',
         fontSize: '8vw',
         padding: '1vh',
-        borderRadius: '0'
+        borderRadius: '0',
+        '&:hover':{
+            backgroundColor: 'black'
+        }
     }
 });
 
