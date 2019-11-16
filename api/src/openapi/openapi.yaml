@@ -82,6 +82,35 @@ paths:
                 type: string
                 description: Error description.
 
+  /image/clean:
+    get:
+      tags:
+        - image
+      summary: Clean all images from a cluster given its identifier.
+      description: Invoke this endpoint to clean all images from a cluster given its identifier returning the best image.
+      operationId: src.api.image.clean
+      parameters:
+        - name: cluster_id
+          in: query
+          description: Specifies the cluster to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Standard EasyCam API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
 components:
   schemas:
     APIResponse:
