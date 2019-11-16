@@ -8,3 +8,4 @@ tensorflow
 numpy
 opencv-python
 Pillow
+nmslib
