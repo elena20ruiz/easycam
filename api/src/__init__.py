@@ -7,6 +7,8 @@ MESSAGE_OK = 'OK'
 MESSAGE_ERROR = 'Unexpected error while processing the API'
 MESSAGE_ERROR_PARAMETERS = 'Not all input parameters were correctly specified.'
 MESSAGE_ERROR_DOWNLOAD = 'The provided image was not correctly specified.'
+MESSAGE_ERROR_BATCH = 'Given batch does not exist.'
+MESSAGE_ERROR_BATCH_IMAGES = 'No images found in the given batch.'
 
 
 __all__ = [
@@ -16,5 +18,7 @@ __all__ = [
     'MESSAGE_OK',
     'MESSAGE_ERROR',
     'MESSAGE_ERROR_PARAMETERS',
-    'MESSAGE_ERROR_DOWNLOAD'
+    'MESSAGE_ERROR_DOWNLOAD',
+    'MESSAGE_ERROR_BATCH',
+    'MESSAGE_ERROR_BATCH_IMAGES'
 ]

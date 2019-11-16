@@ -1,3 +1,6 @@
+import os
+import glob
+
 from flask import request
 
 from src import *
@@ -33,7 +36,26 @@ def download():
 
 
 def cluster(batch_id):
-    return 'OK'
+    try:
+        with Timer('Validate input'):
+            folder_path = f'{DATA_FOLDER}/{batch_id}'
+            if not os.path.exists(folder_path):
+                log.error(f'Error while validating parameters in {cluster.__name__} function: {folder_path}')
+                return response.make(error=True, message=MESSAGE_ERROR_BATCH)
+
+        with Timer('Retrieve images'):
+            images = glob.glob(f'{folder_path}/*.jpg')
+            if not images:
+                log.error(f'No images found in {batch_id} batch.')
+                return response.make(error=True, message=MESSAGE_ERROR_BATCH_IMAGES)
+
+        log.info(f'Cluster completed')
+        return response.make(error=False, response=dict(cluster=images))
+
+    except Exception as e:
+        log.error(f'Exception while processing {cluster.__name__} function: [{e}]')
+        log.exception(e)
+        return response.make(error=True, message=MESSAGE_ERROR)
 
 
 def clean(cluster_id):
