@@ -7,7 +7,7 @@ def extract_features(images):
     try:
         features = list()
         for image_path in images:
-            image_input = image_service.to_numpy_array(image_path)
+            image_input = image_service.image_to_numpy_array(image_path)
             if image_input is not None:
                 feature_array = resnet50_model.predict(image_input)
                 feature_array = feature_array[0]

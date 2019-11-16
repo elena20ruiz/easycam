@@ -45,7 +45,7 @@ def encode(image_path):
         return None
 
 
-def to_numpy_array(image_path):
+def image_to_numpy_array(image_path):
     try:
         numpy_image = cv2.imread(image_path)
         numpy_image = np.expand_dims(numpy_image, axis=0)
@@ -54,3 +54,8 @@ def to_numpy_array(image_path):
     except Exception as e:
         log.error(f'Error while converting image {image_path} to numpy array: [{e}]')
         return None
+
+
+def list_to_numpy_array(list_object):
+    paragraphs_vector = np.array(list_object)
+    return paragraphs_vector
