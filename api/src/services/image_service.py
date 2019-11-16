@@ -33,7 +33,6 @@ def download(batch_id, image_id, image_base64):
 def resize(image_path):
     img = Image.open(image_path).convert('RGB')
     img = img.resize(size=IMAGE_SIZE, resample=Image.LANCZOS)
-    img.save(image_path, format='JPEG', quality=95)
     return img
 
 
