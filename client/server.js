@@ -1,14 +1,24 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
+// load the things we need
+var express = require('express');
+var app = express();
 
-new WebpackDevServer(webpack(config), {
-  hot: true,
-  historyApiFallback: true
-}).listen(3000, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
-  console.log('Listening at http://localhost:3000/');
+// use res.render to load up an ejs view file
+
+// index page 
+app.get('/', function(req, res) {
+	res.render('pages/index');
 });
+
+// about page 
+app.get('/about', function(req, res) {
+	res.render('pages/about');
+});
+
+
+app.use(express.static(__dirname + '/public'));
+
+app.listen(8080);
+console.log('8080 is the magic port');
