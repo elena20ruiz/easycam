@@ -1,0 +1,69 @@
+openapi: '3.0.0'
+
+info:
+  description: Share your DSLR camera images easily built in LauzHack'19
+  version: '1.0'
+  title: EasyCam API
+
+servers:
+  - url: http://localhost:8086
+    description: Development endpoint.
+
+tags:
+  - name: image
+    description: endpoint for managing image stuff.
+
+paths:
+  /image/download:
+    post:
+      tags:
+        - image
+      summary: Download an image given a batch identifier.
+      description: Invoke this endpoint to download an image given a batch identifier.
+      operationId: src.api.image.download
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batch_id:
+                  type: string
+                  description: Batch identifier.
+                image_id:
+                  type: string
+                  description: Image identifier.
+                image_base64:
+                  type: string
+                  description: A urlsafe base64 encoded image.
+      responses:
+        200:
+          description: Standard Git Inspect API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          description: Whether or not the request was successfully processed or not.
+        message:
+          type: string
+          description: Error message if the request was unsuccessful.
+        response:
+          type: object
+          description: Contains the response data if the request was successful.
