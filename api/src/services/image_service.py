@@ -1,6 +1,5 @@
 import base64
 import os
-import cv2
 import numpy as np
 
 from PIL import Image
@@ -24,14 +23,18 @@ def download(batch_id, image_id, image_base64):
         output_path = f'{batch_folder}/{image_id}{IMAGE_FORMAT}'
         with open(output_path, 'wb') as f:
             f.write(image_data)
-        with Image.open(output_path).convert('RGB') as img:
-            img = img.resize(size=IMAGE_SIZE, resample=Image.LANCZOS)
-            img.save(output_path, format='JPEG', quality=95)
         return output_path
 
     except Exception as e:
         log.error(f'Error while downloading image {image_id}: [{e}]')
         return None
+
+
+def resize(image_path):
+    img = Image.open(image_path).convert('RGB')
+    img = img.resize(size=IMAGE_SIZE, resample=Image.LANCZOS)
+    img.save(image_path, format='JPEG', quality=95)
+    return img
 
 
 def encode(image_path):
@@ -45,14 +48,14 @@ def encode(image_path):
         return None
 
 
-def image_to_numpy_array(image_path):
+def image_to_numpy_array(image_pillow):
     try:
-        numpy_image = cv2.imread(image_path)
+        numpy_image = np.array(image_pillow)
         numpy_image = np.expand_dims(numpy_image, axis=0)
         return numpy_image
 
     except Exception as e:
-        log.error(f'Error while converting image {image_path} to numpy array: [{e}]')
+        log.error(f'Error while converting image to numpy array: [{e}]')
         return None
 
 
