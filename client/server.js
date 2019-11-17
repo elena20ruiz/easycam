@@ -38,12 +38,12 @@ app.get('/import', function(req, res) {
 			.then( (result) => {
 				if (!!result) {
 					var data = [
-						'/img/output/58.jpg',
-						'/img/output/58.jpg',
-						'/img/output/58.jpg',
-						'/img/output/58.jpg',
-						'/img/output/58.jpg',
-						'/img/output/58.jpg'
+						'/img/batch/58.jpg',
+						'/img/batch/58.jpg',
+						'/img/batch/58.jpg',
+						'/img/batch/58.jpg',
+						'/img/batch/58.jpg',
+						'/img/batch/58.jpg'
 					]
 					res.render('pages/import', {data:data});
 				} else {
