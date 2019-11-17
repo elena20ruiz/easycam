@@ -40,6 +40,7 @@
     background-size: cover;
     background-position: center;
     max-height: 4vh;
+    margin: 0.25em;
 }
 
 .grid {
@@ -53,6 +54,11 @@
 
 .space {
     margin-bottom: 2vh;
+}
+
+.photo-form {
+    max-height: 80vh;
+    overflow: scroll;
 }
 @media screen and (max-width: 576px) { 
 
