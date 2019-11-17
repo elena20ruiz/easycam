@@ -15,10 +15,22 @@
 		<div>
 
 			<div class="badge">
-					<div class="alert alert-secondary " role="alert">
-							Please, change to your actual Wi-Fi to yours camera 🔄📷
-					</div>
+
+
+				<% if(error){ %>
+				<div class="alert alert-danger " role="alert">
+						Please, make sure you changed to 
+						</br>
+						your WiFi camera
 				</div>
+				<% } else{ %>
+				<div class="alert alert-secondary " role="alert">
+					Please, change to your actual Wi-Fi
+					<br>
+					to yours camera 🔄📷
+				</div>
+				<% } %>
+			</div>
 			<form action="/import">
 				<div class="form-group margin-form2">
 					<label for="initialTime">☀️ Initial time</label>

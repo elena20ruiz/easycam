@@ -23,7 +23,7 @@ app.get('/connect', function(req, res) {
 
 	var device = req.query.device;
 	if(device == c.constant.DEVICES.xiaomi){
-		res.render('pages/connect');
+		res.render('pages/connect', {error: false});
 	}
 	else{
 		res.redirect('/');
@@ -36,9 +36,9 @@ app.get('/import', function(req, res) {
 			.connect(req)
 			.then( (result) => {
 				if (!!result) {
-					res.render('pages/import', {data: result});
+					res.render('pages/import', {data: result, error: false});
 				} else {
-					res.render('pages/connect');
+					res.render('pages/connect', {error: true});
 				}
 			});
 
@@ -56,7 +56,7 @@ app.get('/cluster', function(req, res) {
 				if (!!result) {
 					res.render('pages/cluster', {data: result['cluster'], batchId: result.batchId});
 				} else {
-					res.render('pages/connect');
+					res.render('pages/connect', {error: true});
 				}
 			});
 	} catch (error) {
@@ -72,7 +72,7 @@ app.get('/view', function(req, res) {
 				if (!!result) {
 					res.render('pages/view', {data: result});
 				} else {
-					res.render('pages/connect');
+					res.render('pages/connect', {error: false});
 				}
 			});
 	} catch (error) {

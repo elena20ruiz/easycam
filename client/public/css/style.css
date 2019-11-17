@@ -120,10 +120,21 @@
 }
 
 .badge div {
-    font-size: 12px;   
+    font-size: 14px;   
     margin-bottom: 0;
+    line-height: 3vh;
 }
 
+
+a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+a:active {
+    color: #FFFFFF;
+    text-decoration: none;
+}
 @media screen and (max-width: 576px) { 
 
     .header img {

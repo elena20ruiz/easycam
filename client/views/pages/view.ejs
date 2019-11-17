@@ -16,11 +16,13 @@
 		<div class="final">
 			<img class="final-photo" src="img/batch/<%= data %>.jpg">
 		</div>
-		<form action="/result">
-				<button type="submit" name="reset" class="btn btn-primary middle-button-form secondary-color">RESET</button>
-				<button type="submit" name="share" class="btn btn-primary middle-button-form " style="right: 0">SHARE</button>
+		<form action="/">
+			<button type="submit" name="reset" value="true" class="btn btn-primary middle-button-form secondary-color">RESET</button>
+
+			<button type="submit" name="share" class="btn btn-primary middle-button-form " style="right: 0"><a
+					href="img/batch/<%= data %>.jpg" download="AwesomeImage.png">DOWNLOAD</a></button>
 		</form>
-		
+
 
 	</main>
 
