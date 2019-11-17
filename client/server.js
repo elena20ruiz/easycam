@@ -5,20 +5,33 @@ var app = express();
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// use res.render to load up an ejs view file
-
-// index page 
 app.get('/', function(req, res) {
 	res.render('pages/index');
 });
 
-// about page 
-app.get('/about', function(req, res) {
-	res.render('pages/about');
+app.get('/connect', function(req, res) {
+	res.render('pages/connect');
 });
 
+app.get('/import', function(req, res) {
+	res.render('pages/import');
+});
 
+app.get('/view', function(req, res) {
+	res.render('pages/view');
+});
+
+app.get('/cluster', function(req, res) {
+	res.render('pages/cluster');
+});
+
+app.get('/result', function(req, res) {
+	res.render('pages/result');
+});
+
+// static
 app.use(express.static(__dirname + '/public'));
 
+// run
 app.listen(8080);
 console.log('8080 is the magic port');
