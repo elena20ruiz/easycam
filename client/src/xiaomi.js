@@ -44,10 +44,7 @@ function connect(formReq){
                         for (var i = 0; i < images.length; ++i) {
                             yi.downloadFile(images[i], c.constant.imageOutputFolder)
                                 .then((fileDownloaded) => {
-                                    console.log(i, 'Downloaded', fileDownloaded);
-                                    var bitmap = fs.readFileSync(fileDownloaded);
-                                    var imageBase64 = new Buffer(bitmap).toString('base64');
-                                    console.log(i, 'Converted to imageBase64!');
+                                    console.log('Downloaded', fileDownloaded);
                                 })
                                 .catch((res) => {
                                     console.error('Error downloading image', res);
