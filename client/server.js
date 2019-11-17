@@ -1,33 +1,55 @@
+'use strict';
 
-// Camera
-const yi = require('yi-action-camera');
-// load the things we need
+
+// Load the things we need
 var express = require('express');
 var app = express();
-
-// set the view engine to ejs
 app.set('view engine', 'ejs');
 
+const PORT = 8080;
+const HOST = '0.0.0.0';
+
+//Camera
+const cameraCtrl = require('./src/xiaomi');
+
+// App
 app.get('/', function(req, res) {
 	res.render('pages/index');
 });
 
 app.get('/connect', function(req, res) {
-
 	res.render('pages/connect');
 });
 
 app.get('/import', function(req, res) {
 	try {
-		yi.connect()
-			.then((res) => {
+		cameraCtrl
+			.connect()
+			.then((result)=>{
+				if(result){
+					var ini =''
+					var fi=''
+					files = cameraCtrl.getFiles(ini, fi, result)
+					// Download files
+					cameraCtrl.importFiles(files)
+						.then((res)=>{
 
+						})
+						.catch((res)=>{
+
+						})
+
+					//Save
+
+					// Render
+					res.render('pages/import')
+				}
 			})
-			
+
 	} catch (error) {
-		
+		console.error('BAD ERROR')
 	}
-	res.render('pages/import');
+	
 });
 
 app.get('/view', function(req, res) {
@@ -42,9 +64,9 @@ app.get('/result', function(req, res) {
 	res.render('pages/result');
 });
 
-// static
+// Static
 app.use(express.static(__dirname + '/public'));
 
-// run
-app.listen(8080);
-console.log('8080 is the magic port');
+// Run
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);

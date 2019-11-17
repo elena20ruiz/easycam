@@ -1,6 +1,12 @@
 {
-  "name": "node-ejs",
+  "name": "easycam",
+  "version": "1.0.0",
+  "description": "Share your DSLR camera images easily built in LauzHack'19",
+  "author": "Elena Ruiz & Albert Suarez",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "ejs": "^1.0.0",
     "express": "^4.6.1",
