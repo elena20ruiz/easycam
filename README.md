@@ -101,7 +101,7 @@ This is how our project looks like unifying frontend and backend
 </p>
 
 <p align="center">
-  <img alt="Screenshot 5" src="docs/iscreenshots/screenshot_5.png" width="30%"/>
+  <img alt="Screenshot 5" src="docs/screenshots/screenshot_5.png" width="30%"/>
 </p>
 
 ## Requirements
