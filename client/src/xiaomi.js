@@ -1,6 +1,14 @@
+const fs = require('fs')
 
 const c = require('./constants.js');
 const yi = require('yi-action-camera');
+
+
+function delay(t, v) {
+  return new Promise(function(resolve) {
+      setTimeout(resolve.bind(null, v), t)
+  });
+}
 
 
 function connect(formReq){
@@ -28,13 +36,28 @@ function connect(formReq){
                             imageName = Object.keys(imageDictionary)[0];
                             imageDate = Date.parse(imageDictionary[imageName]);
                             if (imageDate >= fromDate && imageDate <= toDate) {
-                                images.push(imageName);
+                                images.push(c.constant.yiImagePath + imageName);
                             }
                         }
                         console.log(images.length, 'images!');
-                        resolve(res)
+                        console.log(images);
+                        for (var i = 0; i < images.length; ++i) {
+                            yi.downloadFile(images[i], c.constant.imageOutputFolder)
+                                .then((fileDownloaded) => {
+                                    console.log(i, 'Downloaded', fileDownloaded);
+                                    var bitmap = fs.readFileSync(fileDownloaded);
+                                    var imageBase64 = new Buffer(bitmap).toString('base64');
+                                    console.log(i, 'Converted to imageBase64!');
+                                })
+                                .catch((res) => {
+                                    console.error('Error downloading image', res);
+                                });
+                        }
+                        return delay(3000 * images.length).then(function() {
+                            resolve(res);
+                        });
                     })
-                    .catch((res)=> {
+                    .catch((res) => {
                         console.error('Error listing files:', res);
                         resolve(false);
                     })
@@ -49,25 +72,6 @@ function connect(formReq){
         }
     })
 }
-
-function importFiles(elements){
-    return new Promise((resolve) => {
-        var images = []
-        for(var i in elements){
-            yi.downloadFile(c.constant.yiImagePath + elements[i], '' )
-        }
-    })
-}
-
-function getFiles(ini, fi, elements) {
-    var result = []
-    for(var i in elements) {
-        var photoDate = elements[i].split(' ');
-        result.push(i);
-    }
-    return result;
-}
-
 
 
 module.exports.connect = connect;

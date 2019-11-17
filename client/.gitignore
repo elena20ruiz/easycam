@@ -105,3 +105,7 @@ dist
 
 # Lock
 package-lock.json
+
+# Batch
+public/img/batch
+!public/img/batch/.gitkeep
