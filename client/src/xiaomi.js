@@ -1,3 +1,4 @@
+const fs = require('fs')
 
 const c = require('./constants.js');
 const yi = require('yi-action-camera');
@@ -42,8 +43,11 @@ function connect(formReq){
                         console.log(images);
                         for (var i = 0; i < images.length; ++i) {
                             yi.downloadFile(images[i], c.constant.imageOutputFolder)
-                                .then((res) => {
-                                    console.log('Downloaded', res);
+                                .then((fileDownloaded) => {
+                                    console.log(i, 'Downloaded', fileDownloaded);
+                                    var bitmap = fs.readFileSync(fileDownloaded);
+                                    var imageBase64 = new Buffer(bitmap).toString('base64');
+                                    console.log(i, 'Converted to imageBase64!');
                                 })
                                 .catch((res) => {
                                     console.error('Error downloading image', res);
