@@ -84,7 +84,25 @@ Our first goal was to implement connection with a [Canon camera](https://develop
 
 This is how our project looks like unifying frontend and backend
 
-TODO
+<p align="center">
+  <img alt="Screenshot 1" src="docs/screenshots/screenshot_1.png" width="30%"/>
+</p>
+
+<p align="center">
+  <img alt="Screenshot 2" src="docs/screenshots/screenshot_2.png" width="30%"/>
+</p>
+
+<p align="center">
+  <img alt="Screenshot 3" src="docs/screenshots/screenshot_3.png" width="30%"/>
+</p>
+
+<p align="center">
+  <img alt="Screenshot 4" src="docs/screenshots/screenshot_4.png" width="30%"/>
+</p>
+
+<p align="center">
+  <img alt="Screenshot 5" src="docs/iscreenshots/screenshot_5.png" width="30%"/>
+</p>
 
 ## Requirements
 
