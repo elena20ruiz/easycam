@@ -3,26 +3,14 @@
     padding: 5vh;
 }
 
- @media  screen and (min-width: 768px) { 
-
-    .header img {
-        width: 80%;
-    }
-
- }
-
- @media screen and (min-width: 992px) { 
-
-    .header img {
-        width: 50%;
-    }
- 
+.header img {
+    width: 30%;
 }
 
-@media screen and (min-width: 1200px) { 
+@media screen and (max-width: 576px) { 
 
     .header img {
-        width: 30%;
+        width: 100%;
     }
 
 }
