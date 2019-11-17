@@ -52,7 +52,7 @@ function connect(formReq){
                                     console.error('Error downloading image', res);
                                 });
                         }
-                        return delay(3000 * images.length).then(function() {
+                        return delay(5000 * images.length).then(function() {
                             resolve(downloadedImages);
                         });
                     })
@@ -72,5 +72,16 @@ function connect(formReq){
     })
 }
 
+
+function cluster() {
+    return new Promise((resolve)=>{
+        try {
+            resolve(true);
+        } catch (error) {
+            console.log('Timeout - Not possible to cluster');
+            resolve(false);
+        }
+    })
+}
 
 module.exports.connect = connect;

@@ -44,7 +44,6 @@ app.get('/import', function(req, res) {
 	} catch (error) {
 		console.error('BAD ERROR', error);
 	}
-	
 });
 
 app.get('/view', function(req, res) {
@@ -53,24 +52,19 @@ app.get('/view', function(req, res) {
 });
 
 app.get('/cluster', function(req, res) {
-	var data = {
-		'cluster1': [
-			'58',
-			'58',
-			'58',
-			'58'
-		],
-		'cluster2': [
-			'58',
-			'58'
-		],
-		'cluser3': [
-			'58',
-			'58',
-			'58'
-		]
+	try {
+		cameraCtrl
+			.cluster()
+			.then( (result) => {
+				if (!!result) {
+					res.render('pages/cluster', {data: result});
+				} else {
+					res.render('pages/connect');
+				}
+			});
+	} catch (error) {
+		console.error('BAD ERROR', error);
 	}
-	res.render('pages/cluster', {data: data});
 });
 
 app.get('/result', function(req, res) {
