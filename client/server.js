@@ -48,11 +48,29 @@ app.get('/import', function(req, res) {
 });
 
 app.get('/view', function(req, res) {
+
 	res.render('pages/view');
 });
 
 app.get('/cluster', function(req, res) {
-	res.render('pages/cluster');
+	var data = {
+		'cluster1': [
+			'58',
+			'58',
+			'58',
+			'58'
+		],
+		'cluster2': [
+			'58',
+			'58'
+		],
+		'cluser3': [
+			'58',
+			'58',
+			'58'
+		]
+	}
+	res.render('pages/cluster', {data: data});
 });
 
 app.get('/result', function(req, res) {
