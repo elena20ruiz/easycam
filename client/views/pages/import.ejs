@@ -12,9 +12,14 @@
 	</header>
 
 	<main>
-		<h5 class="subtitle">Important!🛑<br/>Change to your device's Wi-Fi </h4>
+		<div class="badge">
+			<div class="alert alert-secondary " role="alert">
+				Please, change to your actual Wi-Fi to yours camera 🔄📱
+			</div>
+		</div>
+
 		<div class="container">
-			<div class="row no-gutters photo-form" >
+			<div class="row no-gutters photo-form">
 				<% for(var i=0; i < data.length; i++) { %>
 				<div class="col-4">
 					<div class="square" style="background-image: url(<%= data[i] %>);"></div>

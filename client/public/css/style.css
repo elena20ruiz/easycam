@@ -111,6 +111,19 @@
     text-align: left;
     font-weight: 600;
 }
+
+.badge{
+    padding: 3vh;
+    padding-bottom: 0;
+    margin: 0 auto;
+    width: -webkit-fill-available;
+}
+
+.badge div {
+    font-size: 12px;   
+    margin-bottom: 0;
+}
+
 @media screen and (max-width: 576px) { 
 
     .header img {
