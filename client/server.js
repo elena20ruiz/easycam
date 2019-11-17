@@ -30,21 +30,12 @@ app.get('/connect', function(req, res) {
 });
 
 app.get('/import', function(req, res) {
-
 	try {
 		cameraCtrl
 			.connect(req)
 			.then( (result) => {
 				if (!!result) {
-					var data = [
-						'/img/batch/58.jpg',
-						'/img/batch/58.jpg',
-						'/img/batch/58.jpg',
-						'/img/batch/58.jpg',
-						'/img/batch/58.jpg',
-						'/img/batch/58.jpg'
-					]
-					res.render('pages/import', {data:data});
+					res.render('pages/import', {data: result});
 				} else {
 					res.render('pages/connect');
 				}

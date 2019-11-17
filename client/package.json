@@ -12,6 +12,7 @@
     "express": "^4.6.1",
     "express-ejs-layouts": "^1.1.0",
     "jquery": "^3.4.1",
+    "request": "^2.88.0",
     "yi-action-camera": "file:yi-action-camera"
   }
 }
