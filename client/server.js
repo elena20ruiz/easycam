@@ -32,30 +32,17 @@ app.get('/connect', function(req, res) {
 app.get('/import', function(req, res) {
 	try {
 		cameraCtrl
-			.connect()
-			.then((result)=>{
-				if(result){
-					var ini =''
-					var fi=''
-					files = cameraCtrl.getFiles(ini, fi, result)
-					// Download files
-					cameraCtrl.importFiles(files)
-						.then((res)=>{
-
-						})
-						.catch((res)=>{
-
-						})
-
-					//Save
-
-					// Render
-					res.render('pages/import')
+			.connect(req)
+			.then( (result) => {
+				if (!!result) {
+					res.render('pages/import');
+				} else {
+					res.render('pages/connect');
 				}
-			})
+			});
 
 	} catch (error) {
-		console.error('BAD ERROR')
+		console.error('BAD ERROR', error);
 	}
 	
 });
