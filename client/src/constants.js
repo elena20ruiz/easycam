@@ -1,10 +1,9 @@
 
 const yiImagePath = '/tmp/fuse_d/DCIM/153MEDIA/';
-const yiImagePattern = 'YDXJ';
-const yiImageFormat = '.jpg';
-const imageOutputFolder = 'images'
+const imageOutputFolder = 'public/img/batch';
 
 
 module.exports.constant = {
-    yiImagePath: yiImagePath
+    yiImagePath: yiImagePath,
+    imageOutputFolder: imageOutputFolder
 }
