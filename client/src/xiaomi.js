@@ -122,7 +122,32 @@ function cluster() {
                 }
             }
             return delay(3000 * files.length).then(function() {
-                resolve(true);
+                console.log('Download done. Start clustering...');
+                options = {
+                    method: 'GET',
+                    uri: c.constant.apiURL + '/image/cluster',
+                    headers : {
+                        'Content-Type':'application/json'
+                    },
+                    qs: {'batch_id': batchId}
+                }
+                request(options, function (error, response, body) {
+                    result = {'batchId': batchId, cluster: {}};
+                    if (error) {
+                        console.error('Error sending to API', error.message);
+                    }
+                    else {
+                        console.log(body);
+                        body = JSON.parse(body)
+                        if (body.error) {
+                            console.error('Error sending to API', body.message);
+                        } else {
+                            result['cluster'] = body.response.cluster;
+                        }
+                        console.log(result);
+                        resolve(result);
+                    }
+                });
             });
         } catch (error) {
             console.log('Timeout - Not possible to cluster', error);
