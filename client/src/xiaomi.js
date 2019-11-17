@@ -1,4 +1,5 @@
-const fs = require('fs')
+const fs = require('fs');
+const request = require('request');
 
 const c = require('./constants.js');
 const yi = require('yi-action-camera');
@@ -8,6 +9,14 @@ function delay(t, v) {
   return new Promise(function(resolve) {
       setTimeout(resolve.bind(null, v), t)
   });
+}
+
+
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 
@@ -76,9 +85,109 @@ function connect(formReq){
 function cluster() {
     return new Promise((resolve)=>{
         try {
+            const batchId = uuidv4();
+            console.log('Batch ID', batchId);
             var files = fs.readdirSync('public' + c.constant.imageOutputFolder);
+            for (var i = 0; i < files.length; ++i) {
+                if (files[i].includes('.jpg')) {
+                    var fileDownloaded = 'public' + c.constant.imageOutputFolder + files[i];
+                    var bitmap = fs.readFileSync(fileDownloaded);
+                    var imageBase64 = new Buffer(bitmap).toString('base64');
+                    console.log(files[i], 'Converted to imageBase64!');
+                    options = {
+                        method: 'POST',
+                        uri: c.constant.apiURL + '/image/download',
+                        headers : {
+                            'Content-Type':'application/json'
+                        },
+                        json: {
+                            'batch_id': batchId,
+                            'image_id': files[i].replace('.jpg', ''),
+                            'image_base64': imageBase64
+                        }
+                    }
+                    request(options, function (error, response, body) {
+                        if (error) {
+                            console.error('Error sending to API', error.message);
+                        }
+                        else {
+                            console.log(body);
+                            if (body.error) {
+                                console.error('Error sending to API', body.message);
+                            } else {
+                                console.log('Done', body.response.message);
+                            }
+                        }
+                    });
+                }
+            }
+            return delay(3000 * files.length).then(function() {
+                console.log('Download done. Start clustering...');
+                options = {
+                    method: 'GET',
+                    uri: c.constant.apiURL + '/image/cluster',
+                    headers : {
+                        'Content-Type':'application/json'
+                    },
+                    qs: {'batch_id': batchId}
+                }
+                request(options, function (error, response, body) {
+                    result = {'batchId': batchId, cluster: {}};
+                    if (error) {
+                        console.error('Error sending to API', error.message);
+                    }
+                    else {
+                        console.log(body);
+                        body = JSON.parse(body)
+                        if (body.error) {
+                            console.error('Error sending to API', body.message);
+                        } else {
+                            result['cluster'] = body.response.cluster;
+                        }
+                        console.log(result);
+                        resolve(result);
+                    }
+                });
+            });
         } catch (error) {
-            console.log('Timeout - Not possible to cluster');
+            console.log('Timeout - Not possible to cluster', error);
+            resolve(false);
+        }
+    })
+}
+
+function clean(batchId, clusterId) {
+    return new Promise((resolve)=>{
+        try {
+            console.log('Batch', batchId);
+            console.log('Cluster', clusterId);
+            options = {
+                method: 'GET',
+                uri: c.constant.apiURL + '/image/clean',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                qs: {'batch_id': batchId, 'cluster_id': clusterId}
+            }
+            request(options, function (error, response, body) {
+                image = null;
+                if (error) {
+                    console.error('Error sending to API', error.message);
+                }
+                else {
+                    console.log(body);
+                    body = JSON.parse(body)
+                    if (body.error) {
+                        console.error('Error sending to API', body.message);
+                    } else {
+                        image = body.response.image;
+                    }
+                    console.log('Done', image);
+                    resolve(image);
+                }
+            });
+        } catch (error) {
+            console.log('Timeout - Not possible to clean', error);
             resolve(false);
         }
     })
@@ -86,3 +195,4 @@ function cluster() {
 
 module.exports.connect = connect;
 module.exports.cluster = cluster;
+module.exports.clean = clean;

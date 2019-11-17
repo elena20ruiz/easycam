@@ -14,9 +14,6 @@ const cameraCtrl = require('./src/xiaomi');
 const c = require('./src/constants');
 
 
-
-var batchId = undefined;
-
 // App
 app.get('/', function(req, res) {
 	res.render('pages/index');
@@ -50,11 +47,6 @@ app.get('/import', function(req, res) {
 	}
 });
 
-app.get('/view', function(req, res) {
-	var data = '58';
-	res.render('pages/view', {data: data});
-});
-
 app.get('/cluster', function(req, res) {
 
 	try {
@@ -62,8 +54,7 @@ app.get('/cluster', function(req, res) {
 			.cluster()
 			.then( (result) => {
 				if (!!result) {
-					batchId = result.batchId;
-					res.render('pages/cluster', {data: result['cluster']});
+					res.render('pages/cluster', {data: result['cluster'], batchId: result.batchId});
 				} else {
 					res.render('pages/connect');
 				}
@@ -73,8 +64,20 @@ app.get('/cluster', function(req, res) {
 	}
 });
 
-app.get('/result', function(req, res) {
-	res.render('pages/result');
+app.get('/view', function(req, res) {
+	try {
+		cameraCtrl
+			.clean(req.query.batchId, req.query.clusterId)
+			.then( (result) => {
+				if (!!result) {
+					res.render('pages/view', {data: result});
+				} else {
+					res.render('pages/connect');
+				}
+			});
+	} catch (error) {
+		console.error('BAD ERROR', error);
+	}
 });
 
 // Static
