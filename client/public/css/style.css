@@ -1,3 +1,16 @@
-body, html {
-    background-color: black;
+.header {
+    text-align: center;
+    padding: 5vh;
+}
+
+.header img {
+    width: 30%;
+}
+
+@media screen and (max-width: 576px) { 
+
+    .header img {
+        width: 100%;
+    }
+
 }
