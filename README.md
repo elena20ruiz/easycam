@@ -11,7 +11,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/elena20ruiz/easycam.svg)](https://GitHub.com/elena20ruiz/easycam/graphs/contributors/)
 [![GitHub license](https://img.shields.io/github/license/elena20ruiz/easycam.svg)](https://github.com/elena20ruiz/easycam/blob/master/LICENSE)
 
-[Devpost](https://devpost.com/software/easycam)
+[Demo](http://134.209.244.212:8087) | [API Documentation](http://134.209.244.212:8086/ui) | [Devpost](https://devpost.com/software/easycam)
 
 📸 Share your images to Social Media from your DSLR camera without cables and in less than 1 minute. Project built in [LauzHack 2019](https://lauzhack.com/).
 
