@@ -21,6 +21,7 @@ function connect(formReq){
                     .then((res)=> {
                         console.log('Files listed!');
                         var images = [];
+                        var downloadedImages = [];
                         fromDateTimeDate = formReq.query.initialTimeDate;
                         fromDateTimeHour = formReq.query.initialTimeHour;
                         toDateTimeDate = formReq.query.finalTimeDate;
@@ -37,12 +38,13 @@ function connect(formReq){
                             imageDate = Date.parse(imageDictionary[imageName]);
                             if (imageDate >= fromDate && imageDate <= toDate) {
                                 images.push(c.constant.yiImagePath + imageName);
+                                downloadedImages.push(c.constant.imageOutputFolder + imageName);
                             }
                         }
                         console.log(images.length, 'images!');
                         console.log(images);
                         for (var i = 0; i < images.length; ++i) {
-                            yi.downloadFile(images[i], c.constant.imageOutputFolder)
+                            yi.downloadFile(images[i], 'public' + c.constant.imageOutputFolder)
                                 .then((fileDownloaded) => {
                                     console.log('Downloaded', fileDownloaded);
                                 })
@@ -51,7 +53,7 @@ function connect(formReq){
                                 });
                         }
                         return delay(3000 * images.length).then(function() {
-                            resolve(res);
+                            resolve(downloadedImages);
                         });
                     })
                     .catch((res) => {

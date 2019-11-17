@@ -1,6 +1,6 @@
 
 const yiImagePath = '/tmp/fuse_d/DCIM/153MEDIA/';
-const imageOutputFolder = 'public/img/batch';
+const imageOutputFolder = '/img/batch/';
 
 const DEVICES = {
     xiaomi: 'Xiaomi Yi Action',
