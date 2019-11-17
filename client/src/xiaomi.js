@@ -52,6 +52,15 @@ function connect(formReq){
                         }
                         console.log(images.length, 'images!');
                         console.log(images);
+                        console.log('Deleting old images...');
+                        var files = fs.readdirSync('public' + c.constant.imageOutputFolder);
+                        for (var i = 0; i < files.length; ++i) {
+                            if (files[i].includes('.jpg')) {
+                                var fileDownloaded = 'public' + c.constant.imageOutputFolder + files[i];
+                                fs.unlinkSync(fileDownloaded);
+                            }
+                        }
+                        console.log('Done deleting');
                         for (var i = 0; i < images.length; ++i) {
                             yi.downloadFile(images[i], 'public' + c.constant.imageOutputFolder)
                                 .then((fileDownloaded) => {
