@@ -13,6 +13,10 @@ const HOST = '0.0.0.0';
 const cameraCtrl = require('./src/xiaomi');
 const c = require('./src/constants');
 
+
+
+var batchId = undefined;
+
 // App
 app.get('/', function(req, res) {
 	res.render('pages/index');
@@ -47,17 +51,19 @@ app.get('/import', function(req, res) {
 });
 
 app.get('/view', function(req, res) {
-
-	res.render('pages/view');
+	var data = '58';
+	res.render('pages/view', {data: data});
 });
 
 app.get('/cluster', function(req, res) {
+
 	try {
 		cameraCtrl
 			.cluster()
 			.then( (result) => {
 				if (!!result) {
-					res.render('pages/cluster', {data: result});
+					batchId = result.batchId;
+					res.render('pages/cluster', {data: result['cluster']});
 				} else {
 					res.render('pages/connect');
 				}

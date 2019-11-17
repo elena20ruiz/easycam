@@ -18,6 +18,7 @@
 .margin-form {
     font-weight: 600;
     padding: 5vh;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);
 }
 
 
@@ -28,11 +29,28 @@
     height: 11vh;
     font-size: 18px;
     background-color: #4582B6;
+    border: 0;
+    border-radius: 0;
+}
+
+.middle-button-form{
+    bottom: 0;
+    position: fixed;
+    width: 50%;
+    height: 11vh;
+    font-size: 18px;
+    background-color: #4582B6;
+    border: 0;
+    border-radius: 0;
 }
 
 .img-grid {
     width: 100%;
     height: auto;
+}
+
+.secondary-color{
+    background-color: #91BBDF;
 }
 
 .square {
@@ -59,6 +77,26 @@
 .photo-form {
     max-height: 80vh;
     overflow: scroll;
+}
+
+.final-photo {
+    max-width: 80%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+}
+
+.final{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    margin-top: 10vh;
+}
+
+.title{
+    padding-top: 6vh;
+    text-align: center;
+
 }
 @media screen and (max-width: 576px) { 
 

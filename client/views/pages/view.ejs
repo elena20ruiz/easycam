@@ -12,9 +12,16 @@
 	</header>
 
 	<main>
-		<div>
-			
+		<h4 class="title">🎉Your photo is ready!🎉</h4>
+		<div class="final">
+			<img class="final-photo" src="img/batch/<%= data %>.jpg">
 		</div>
+		<form action="/result">
+				<button type="submit" name="reset" class="btn btn-primary middle-button-form secondary-color">RESET</button>
+				<button type="submit" name="share" class="btn btn-primary middle-button-form " style="right: 0">SHARE</button>
+		</form>
+		
+
 	</main>
 
 	<script src='js/scripts.js'></script>
