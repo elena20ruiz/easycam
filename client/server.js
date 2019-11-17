@@ -31,7 +31,6 @@ app.get('/connect', function(req, res) {
 
 app.get('/import', function(req, res) {
 
-
 	try {
 		cameraCtrl
 			.connect(req)
