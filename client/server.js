@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 const PORT = 8080;
 const HOST = '0.0.0.0';
 
-//Camera
+// Camera
 const cameraCtrl = require('./src/xiaomi');
 
 // App

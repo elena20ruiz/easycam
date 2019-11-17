@@ -1,7 +1,5 @@
 
 const c = require('./constants.js');
-
-// Camera
 const yi = require('yi-action-camera');
 
 
@@ -10,26 +8,37 @@ function connect(){
         try {
             yi.connect()
             .then(()=>{
-                console.log('Camera connected')
+                console.log('Camera connected!')
                 yi.listFiles(c.constant.yiImagePath)
                     .then((res)=> {
-                        console.log(res);
+                        console.log('Files listed!');
+                        var images = []
+                        fromDate = Date.parse('2019-11-15 21:25:24');
+                        toDate = Date.parse('2019-11-17 21:25:24');
+                        for (var i = 0; i < res.length; ++i) {
+                            imageDictionary = res[i]
+                            imageName = Object.keys(imageDictionary)[0];
+                            imageDate = Date.parse(imageDictionary[imageName]);
+                            if (imageDate >= fromDate && imageDate <= toDate) {
+                                images.push(imageName);
+                            }
+                        }
+                        console.log(images.length, 'images!');
                         resolve(res)
                     })
                     .catch((res)=> {
-                        console.error('ERROR' + res);
+                        console.error('Error listing files:', res);
                         resolve(false);
                     })
             })
             .catch(()=>{
-                console.log('Not possible to connect');
+                console.log('Not possible to connect!');
                 resolve(false);
             }) 
         } catch (error) {
             console.log('Timeout - Not possible to connect');
             resolve(false);
         }
- 
     })
 }
 
