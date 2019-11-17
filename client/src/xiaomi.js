@@ -76,7 +76,7 @@ function connect(formReq){
 function cluster() {
     return new Promise((resolve)=>{
         try {
-            resolve(true);
+            var files = fs.readdirSync('public' + c.constant.imageOutputFolder);
         } catch (error) {
             console.log('Timeout - Not possible to cluster');
             resolve(false);
@@ -85,3 +85,4 @@ function cluster() {
 }
 
 module.exports.connect = connect;
+module.exports.cluster = cluster;
