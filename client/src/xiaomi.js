@@ -156,5 +156,43 @@ function cluster() {
     })
 }
 
+function clean(batchId, clusterId) {
+    return new Promise((resolve)=>{
+        try {
+            console.log('Batch', batchId);
+            console.log('Cluster', clusterId);
+            options = {
+                method: 'GET',
+                uri: c.constant.apiURL + '/image/clean',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                qs: {'batch_id': batchId, 'cluster_id': clusterId}
+            }
+            request(options, function (error, response, body) {
+                image = null;
+                if (error) {
+                    console.error('Error sending to API', error.message);
+                }
+                else {
+                    console.log(body);
+                    body = JSON.parse(body)
+                    if (body.error) {
+                        console.error('Error sending to API', body.message);
+                    } else {
+                        image = body.response.image;
+                    }
+                    console.log('Done', image);
+                    resolve(image);
+                }
+            });
+        } catch (error) {
+            console.log('Timeout - Not possible to clean', error);
+            resolve(false);
+        }
+    })
+}
+
 module.exports.connect = connect;
 module.exports.cluster = cluster;
+module.exports.clean = clean;
