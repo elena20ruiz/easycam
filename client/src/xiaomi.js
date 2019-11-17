@@ -3,7 +3,7 @@ const c = require('./constants.js');
 const yi = require('yi-action-camera');
 
 
-function connect(){
+function connect(formReq){
     return new Promise((resolve)=>{
         try {
             yi.connect()
@@ -12,11 +12,19 @@ function connect(){
                 yi.listFiles(c.constant.yiImagePath)
                     .then((res)=> {
                         console.log('Files listed!');
-                        var images = []
-                        fromDate = Date.parse('2019-11-15 21:25:24');
-                        toDate = Date.parse('2019-11-17 21:25:24');
+                        var images = [];
+                        fromDateTimeDate = formReq.query.initialTimeDate;
+                        fromDateTimeHour = formReq.query.initialTimeHour;
+                        toDateTimeDate = formReq.query.finalTimeDate;
+                        toDateTimeHour = formReq.query.finalTimeHour;
+                        if (!fromDateTimeDate || !fromDateTimeHour || !toDateTimeDate || !toDateTimeHour) {
+                            alert('You have to fill all the parameters!');
+                            resolve(false);
+                        }
+                        fromDate = Date.parse(fromDateTimeDate + ' ' + fromDateTimeHour);
+                        toDate = Date.parse(toDateTimeDate + ' ' + toDateTimeHour);
                         for (var i = 0; i < res.length; ++i) {
-                            imageDictionary = res[i]
+                            imageDictionary = res[i];
                             imageName = Object.keys(imageDictionary)[0];
                             imageDate = Date.parse(imageDictionary[imageName]);
                             if (imageDate >= fromDate && imageDate <= toDate) {
