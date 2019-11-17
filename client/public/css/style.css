@@ -30,6 +30,27 @@
     background-color: #4582B6;
 }
 
+.img-grid {
+    width: 100%;
+    height: auto;
+}
+
+.square {
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center;
+    max-height: 4vh;
+}
+
+.grid {
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 60vh;
+    height: 80vw;
+    max-height: 60vh;
+    font-size: 1rem;
+}
+
 .space {
     margin-bottom: 2vh;
 }
