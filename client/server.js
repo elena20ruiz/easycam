@@ -1,3 +1,6 @@
+
+// Camera
+const yi = require('yi-action-camera');
 // load the things we need
 var express = require('express');
 var app = express();
@@ -10,10 +13,20 @@ app.get('/', function(req, res) {
 });
 
 app.get('/connect', function(req, res) {
+
 	res.render('pages/connect');
 });
 
 app.get('/import', function(req, res) {
+	try {
+		yi.connect()
+			.then((res) => {
+
+			})
+			
+	} catch (error) {
+		
+	}
 	res.render('pages/import');
 });
 
