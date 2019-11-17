@@ -7,9 +7,12 @@ const DEVICES = {
     yeti: 'Yeti Nano Microphone'
 }
 
+const apiURL = 'http://134.209.244.212:8087'
+
 
 module.exports.constant = {
     yiImagePath: yiImagePath,
     imageOutputFolder: imageOutputFolder,
-    DEVICES: DEVICES
+    DEVICES: DEVICES,
+    apiURL: apiURL
 }
