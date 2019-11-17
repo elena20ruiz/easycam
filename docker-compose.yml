@@ -40,7 +40,7 @@ services:
     networks:
       - easycam
     ports:
-      - 8087:8087
+      - 8087:8080
     restart: always
 
 networks:

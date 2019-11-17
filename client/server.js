@@ -1,10 +1,14 @@
-// load the things we need
+'use strict';
+
+// Load the things we need
 var express = require('express');
 var app = express();
-
-// set the view engine to ejs
 app.set('view engine', 'ejs');
 
+const PORT = 8080;
+const HOST = '0.0.0.0';
+
+// App
 app.get('/', function(req, res) {
 	res.render('pages/index');
 });
@@ -29,9 +33,9 @@ app.get('/result', function(req, res) {
 	res.render('pages/result');
 });
 
-// static
+// Static
 app.use(express.static(__dirname + '/public'));
 
-// run
-app.listen(8080);
-console.log('8080 is the magic port');
+// Run
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
