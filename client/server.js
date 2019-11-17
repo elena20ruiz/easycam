@@ -11,6 +11,7 @@ const HOST = '0.0.0.0';
 
 // Camera
 const cameraCtrl = require('./src/xiaomi');
+const c = require('./src/constants');
 
 // App
 app.get('/', function(req, res) {
@@ -18,7 +19,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/connect', function(req, res) {
-	res.render('pages/connect');
+
+	var device = req.query.device;
+	if(device == c.constant.DEVICES.xiaomi){
+		res.render('pages/connect');
+	}
+	else{
+		res.redirect('/');
+	}
 });
 
 app.get('/import', function(req, res) {
