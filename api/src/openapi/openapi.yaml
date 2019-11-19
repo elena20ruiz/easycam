@@ -6,8 +6,8 @@ info:
   title: EasyCam API
 
 servers:
-  - url: http://localhost:8086
-    description: Development endpoint.
+  - url: https://api.easycam.asuarez.dev
+    description: Production endpoint.
 
 tags:
   - name: image

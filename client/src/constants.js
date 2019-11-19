@@ -7,7 +7,7 @@ const DEVICES = {
     yeti: 'Yeti Nano Microphone'
 }
 
-const apiURL = 'http://134.209.244.212:8086'
+const apiURL = 'https://api.easycam.asuarez.dev'
 
 
 module.exports.constant = {
