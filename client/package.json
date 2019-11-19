@@ -8,7 +8,7 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "ejs": "^1.0.0",
+    "ejs": "^2.7.3",
     "express": "^4.6.1",
     "express-ejs-layouts": "^1.1.0",
     "jquery": "^3.4.1",
